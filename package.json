@@ -1,13 +1,14 @@
 {
-  "name": "ms-toolkit",
-  "version": "0.0.11",
-  "description": "Set of modules that I use in my projects.",
-  "repository": "ms-fadaei/ms-toolkit",
+  "name": "achar",
+  "version": "0.0.1",
+  "description": "Set of modules that I use in achareh projects.",
+  "repository": "achareh-co/achar",
   "license": "MIT",
   "keywords": [
     "toolkit",
     "typescript",
-    "modules"
+    "modules",
+    "achar"
   ],
   "author": {
     "name": "Mohammad Saleh Fadaei",
