@@ -1,2 +1,2 @@
 # Achar
-Set of modules that I use in achareh projects
+Set of modules that we use in Achareh
