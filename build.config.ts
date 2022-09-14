@@ -1,7 +1,16 @@
+import { resolve } from 'path';
 import { defineBuildConfig } from 'unbuild';
 
 export default defineBuildConfig({
   declaration: true,
-  emitCJS: true,
   entries: ['src/index'],
+  alias: {
+    '@': resolve(__dirname, './src'),
+    '~': resolve(__dirname, './playground'),
+  },
+  rollup: {
+    emitCJS: true,
+    inlineDependencies: true,
+    esbuild: { target: 'es2016' },
+  },
 });
