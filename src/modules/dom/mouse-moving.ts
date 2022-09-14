@@ -1,63 +1,122 @@
 import scrollSnap from './scroll-snap';
-
+import { delay } from '../helpers';
 /**
  * mouse moving
  * @param el scrollable element
- * @param {number} scrollLeft scrollable element scroll left value
  * @param {boolean} snapedScroll snaped scroll
- * @returns {Function} unmounte scroll move
  */
-export default function mouseMoving(el: HTMLElement, scrollLeft: number, snapedScroll = true) {
-  if (!el) throw Error('el');
+export default function mouseMoving(el: HTMLElement, snapedScroll = true) {
+  if (!el) throw Error('element not found!');
+
+  const parentEl = el.parentElement;
+  if (!parentEl) throw Error('parentElement not found!');
 
   let isOnMoving = false;
+  let scrollLeft = 0;
 
   const startMoving = () => {
     isOnMoving = true;
-    el.style.removeProperty('scrollBehavior');
-    el.style.cursor = 'grabbing';
+    el.style.removeProperty('scroll-behavior');
+    parentEl.style.cursor = 'grabbing';
+
+    events.start?.(scrollLeft);
   };
 
   const endedMoving = () => {
     isOnMoving = false;
     el.style.scrollBehavior = 'smooth';
-    el.style.removeProperty('grabbing');
+    parentEl.style.removeProperty('cursor');
 
     if (snapedScroll) {
-      setTimeout(() => {
+      delay(1).then(() => {
         scrollLeft = scrollSnap(el, scrollLeft);
-      }, 1);
+        events.end?.(scrollLeft);
+      });
+    } else {
+      delay(1).then(() => {
+        el.style.removeProperty('pointer-events');
+      });
     }
+    events.end?.(scrollLeft);
   };
 
   const onMouseMoving = (event: MouseEvent) => {
-    if (isOnMoving) {
-      el.style.pointerEvents = 'none';
+    if (!isOnMoving) return;
+    el.style.pointerEvents = 'none';
 
-      scrollLeft += -event.movementX;
+    scrollLeft += -event.movementX;
 
-      const maxScroll = -(el.scrollWidth - el.clientWidth);
+    const maxScroll = -(el.scrollWidth - el.clientWidth);
 
-      if (maxScroll > scrollLeft) {
-        scrollLeft = maxScroll;
-      }
-
-      if (scrollLeft > 0) {
-        scrollLeft = 0;
-      }
-      el.scrollTo(scrollLeft, 0);
+    if (maxScroll > scrollLeft) {
+      scrollLeft = maxScroll;
     }
+
+    if (scrollLeft > 0) {
+      scrollLeft = 0;
+    }
+
+    events.moving?.(scrollLeft);
+
+    el.scrollTo(scrollLeft, 0);
   };
 
-  el.addEventListener('mousedown', startMoving);
-  el.addEventListener('mouseup', endedMoving);
-  el.addEventListener('mouseleave', endedMoving);
-  el.addEventListener('mousemove', onMouseMoving);
-
-  return () => {
-    el.removeEventListener('mousedown', startMoving);
-    el.removeEventListener('mouseup', endedMoving);
-    el.removeEventListener('mouseleave', endedMoving);
-    el.removeEventListener('mousemove', onMouseMoving);
+  const scrollTo = (currentScrollLeft: number) => {
+    if (snapedScroll) {
+      scrollLeft = scrollSnap(el, currentScrollLeft);
+    } else {
+      el.scrollTo(currentScrollLeft, 0);
+      scrollLeft = currentScrollLeft;
+    }
+    events.end?.(scrollLeft);
   };
+
+  const returnHelpers = () => ({
+    destroy,
+    on,
+    off,
+    snap,
+    scrollTo,
+  });
+
+  parentEl.addEventListener('mousedown', startMoving);
+  parentEl.addEventListener('mouseup', endedMoving);
+  parentEl.addEventListener('mouseleave', endedMoving);
+  parentEl.addEventListener('mousemove', onMouseMoving);
+
+  type cbEvents = (scrollLeft: number) => void;
+
+  const events: { [key: string]: null | cbEvents } = {
+    strat: null,
+    end: null,
+    moving: null,
+  };
+
+  const snap = () => {
+    scrollLeft = scrollSnap(el, scrollLeft);
+    events.end?.(scrollLeft);
+  };
+
+  const destroy = () => {
+    parentEl.removeEventListener('mousedown', startMoving);
+    parentEl.removeEventListener('mouseup', endedMoving);
+    parentEl.removeEventListener('mouseleave', endedMoving);
+    parentEl.removeEventListener('mousemove', onMouseMoving);
+
+    return returnHelpers();
+  };
+
+  const on = (key: keyof typeof events, cb: cbEvents) => {
+    events[key] = cb;
+
+    return returnHelpers();
+  };
+
+  const off = (key: keyof typeof events) => {
+    events[key] = null;
+
+    return returnHelpers();
+  };
+
+  return returnHelpers();
 }
