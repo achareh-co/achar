@@ -15,3 +15,5 @@ export { default as scrollByAmount } from './scroll-by-amount';
 export { default as createScrollObserver } from './create-scroll-observer';
 
 export { default as scrollSnap } from './scroll-snap';
+
+export { default as mouseMoving } from './mouse-moving';
