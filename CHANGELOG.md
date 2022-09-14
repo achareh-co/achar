@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/achareh-co/achar/compare/v0.0.3...v0.0.4) (2022-09-14)
+
+
+### Features
+
+* add `mouseMoving` function ([1ba85c5](https://github.com/achareh-co/achar/commit/1ba85c56e42b21932292d88b463033211a9883f8))
+* add `scrollSnap` function ([6646475](https://github.com/achareh-co/achar/commit/6646475361bda4f36ad2e074f53ff788d76d51b6))
+
 ### [0.0.3](https://github.com/achareh-co/achar/compare/v0.0.2...v0.0.3) (2022-09-14)
 
 
