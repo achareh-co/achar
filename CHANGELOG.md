@@ -2,12 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/achareh-co/achar/compare/v0.0.2...v0.0.3) (2022-09-14)
+
 
 ### Features
 
-* add `queryInclude` ([0a3647f](https://github.com/achareh-co/achar/commit/0a3647fea3cb28a8041fa0c80cd9e598e1226274))
-* add `retryWithDelay` ([c555ed0](https://github.com/achareh-co/achar/commit/c555ed0d34430d478528e28e27afeff16acc5fcf))
+* add `queryInclude` function ([0a3647f](https://github.com/achareh-co/achar/commit/0a3647fea3cb28a8041fa0c80cd9e598e1226274))
+* add `retryWithDelay` function ([c555ed0](https://github.com/achareh-co/achar/commit/c555ed0d34430d478528e28e27afeff16acc5fcf))
 
+
+### Bug Fixes
+
+* update changelog ([0dda7fd](https://github.com/achareh-co/achar/commit/0dda7fd94dbe6ca6d1ff9522cd1d90759f152256))
 
 ### [0.0.2](https://github.com/achareh-co/achar/releases/tag/v0.0.2) (2022-09-13)
 
