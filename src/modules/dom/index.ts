@@ -13,3 +13,5 @@ export type { scrollToElementOptions } from './scroll-to-element';
 export { default as scrollByAmount } from './scroll-by-amount';
 
 export { default as createScrollObserver } from './create-scroll-observer';
+
+export { default as scrollSnap } from './scroll-snap';
