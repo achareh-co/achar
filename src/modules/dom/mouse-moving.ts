@@ -1,5 +1,9 @@
 import scrollSnap from './scroll-snap';
 import { delay } from '../helpers';
+
+type MouseMovingEvent = (scrollLeft: number) => void;
+type MouseMovingEvents = 'start' | 'end' | 'moving';
+
 /**
  * mouse moving
  * @param el scrollable element
@@ -71,23 +75,13 @@ export default function mouseMoving(el: HTMLElement, snapedScroll = true) {
     events.end?.(scrollLeft);
   };
 
-  const returnHelpers = () => ({
-    destroy,
-    on,
-    off,
-    snap,
-    scrollTo,
-  });
-
   parentEl.addEventListener('mousedown', startMoving);
   parentEl.addEventListener('mouseup', endedMoving);
   parentEl.addEventListener('mouseleave', endedMoving);
   parentEl.addEventListener('mousemove', onMouseMoving);
 
-  type cbEvents = (scrollLeft: number) => void;
-
-  const events: { [key: string]: null | cbEvents } = {
-    strat: null,
+  const events: Record<MouseMovingEvents, MouseMovingEvent | null> = {
+    start: null,
     end: null,
     moving: null,
   };
@@ -102,21 +96,21 @@ export default function mouseMoving(el: HTMLElement, snapedScroll = true) {
     parentEl.removeEventListener('mouseup', endedMoving);
     parentEl.removeEventListener('mouseleave', endedMoving);
     parentEl.removeEventListener('mousemove', onMouseMoving);
-
-    return returnHelpers();
   };
 
-  const on = (key: keyof typeof events, cb: cbEvents) => {
-    events[key] = cb;
-
-    return returnHelpers();
+  const on = (key: MouseMovingEvents, callback: MouseMovingEvent) => {
+    events[key] = callback;
   };
 
-  const off = (key: keyof typeof events) => {
+  const off = (key: MouseMovingEvents) => {
     events[key] = null;
-
-    return returnHelpers();
   };
 
-  return returnHelpers();
+  return {
+    destroy,
+    on,
+    off,
+    snap,
+    scrollTo,
+  };
 }
