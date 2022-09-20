@@ -65,6 +65,11 @@ export default function mouseMoving(el: HTMLElement, snapedScroll = true) {
     el.scrollTo(scrollLeft, 0);
   };
 
+  const onDragstart = (event: DragEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   const scrollTo = (currentScrollLeft: number) => {
     if (snapedScroll) {
       scrollLeft = scrollSnap(el, currentScrollLeft);
@@ -79,6 +84,7 @@ export default function mouseMoving(el: HTMLElement, snapedScroll = true) {
   parentEl.addEventListener('mouseup', endedMoving);
   parentEl.addEventListener('mouseleave', endedMoving);
   parentEl.addEventListener('mousemove', onMouseMoving);
+  parentEl.addEventListener('dragstart', onDragstart, true);
 
   const events: Record<MouseMovingEvents, MouseMovingEvent | null> = {
     start: null,
@@ -96,6 +102,7 @@ export default function mouseMoving(el: HTMLElement, snapedScroll = true) {
     parentEl.removeEventListener('mouseup', endedMoving);
     parentEl.removeEventListener('mouseleave', endedMoving);
     parentEl.removeEventListener('mousemove', onMouseMoving);
+    parentEl.removeEventListener('dragstart', onDragstart, true);
   };
 
   const on = (key: MouseMovingEvents, callback: MouseMovingEvent) => {
