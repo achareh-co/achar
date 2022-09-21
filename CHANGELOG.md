@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/achareh-co/achar/compare/v0.0.4...v0.0.5) (2022-09-21)
+
+
+### Bug Fixes
+
+* fix  `mouseMoving` function events type ([16b710d](https://github.com/achareh-co/achar/commit/16b710dd6f4dbb1b0db79105eef356e0f6b085ac))
+* fix `mouseMoving` function - prevent dragging items ([7c263b9](https://github.com/achareh-co/achar/commit/7c263b9b015b1294ae701bbca7a403988101e3e0))
+* fix typo ([132c9de](https://github.com/achareh-co/achar/commit/132c9de1b0d9812b9476442aa2f65fff80ec29d4))
+* refactor `mouseMoving` function ([d51a978](https://github.com/achareh-co/achar/commit/d51a978ff3d86997e7af6a1361d25456ba0ce48c))
+
 ### [0.0.4](https://github.com/achareh-co/achar/compare/v0.0.3...v0.0.4) (2022-09-14)
 
 
