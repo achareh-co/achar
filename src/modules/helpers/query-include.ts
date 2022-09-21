@@ -4,8 +4,11 @@
  * @returns {boolean} return boolean
  */
 export default function queryInclude(query: string, routeString?: string): boolean {
-  return (
-    (typeof location !== 'undefined' && Boolean(location) && location.search.includes(query)) ||
-    (typeof routeString !== 'undefined' && Boolean(routeString) && routeString.includes(query))
-  );
+  if (typeof location === 'object') {
+    return typeof location.search === 'string' && location.search.includes(query);
+  } else if (typeof routeString === 'string') {
+    return routeString.includes(query);
+  } else {
+    return false;
+  }
 }

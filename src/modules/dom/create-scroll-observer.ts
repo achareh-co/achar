@@ -6,7 +6,7 @@ type ReturnFunctionType = () => void;
  * @param nodes IntersectionObserver node elements
  * @param onObserve intersection observer callback function
  * @param options Intersection observer init options
- * @returns {function} disconnect ntersection observer
+ * @returns {function} disconnect intersection observer
  */
 export default function createScrollObserver(
   nodes: Element[],

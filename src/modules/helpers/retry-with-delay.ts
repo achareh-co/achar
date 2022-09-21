@@ -20,7 +20,7 @@ export function retryWithDelay(
 ) {
   return async function retry(): Promise<void> {
     try {
-      return await requestFn();
+      return requestFn();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e?.response?.status) throw e;
