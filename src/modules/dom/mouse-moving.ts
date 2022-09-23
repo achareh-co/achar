@@ -1,123 +1,127 @@
 import scrollSnap from './scroll-snap';
 import { delay } from '../helpers';
 
-type MouseMovingEvent = (scrollLeft: number) => void;
-type MouseMovingEvents = 'start' | 'end' | 'moving';
+export interface MouseMovingOptions {
+  snap: boolean;
+}
+export type MouseMovingEventCallback = (scrollX?: number) => void;
+export type MouseMovingEvents = 'start' | 'end' | 'moving' | 'snap' | 'update';
 
-/**
- * mouse moving
- * @param el scrollable element
- * @param {boolean} snapedScroll snaped scroll
- */
-export default function mouseMoving(el: HTMLElement, snapedScroll = true) {
-  if (!el) throw Error('element not found!');
+export default class MouseMoving {
+  el: HTMLElement;
+  parentElement: HTMLElement;
+  options: MouseMovingOptions;
+  isOnMoving = false;
 
-  const parentEl = el.parentElement;
-  if (!parentEl) throw Error('parentElement not found!');
-
-  let isOnMoving = false;
-  let scrollLeft = 0;
-
-  const startMoving = () => {
-    isOnMoving = true;
-    el.style.removeProperty('scroll-behavior');
-    parentEl.style.cursor = 'grabbing';
-
-    events.start?.(scrollLeft);
+  scrollX = 0;
+  events: Record<MouseMovingEvents, MouseMovingEventCallback | null> = {
+    start: null,
+    moving: null,
+    snap: null,
+    end: null,
+    update: null,
   };
 
-  const endedMoving = () => {
-    isOnMoving = false;
-    el.style.scrollBehavior = 'smooth';
-    parentEl.style.removeProperty('cursor');
+  constructor(el: HTMLElement, options?: MouseMovingOptions) {
+    if (!el) throw Error('Element not found!');
+    if (!el.parentElement) throw Error('Element Parent not found!');
 
-    if (snapedScroll) {
-      delay(1).then(() => {
-        scrollLeft = scrollSnap(el, scrollLeft);
-        events.end?.(scrollLeft);
+    this.el = el;
+    this.parentElement = el.parentElement;
+    this.options = options || { snap: false };
+
+    this.mount();
+  }
+
+  on(event: MouseMovingEvents, callback: MouseMovingEventCallback): void {
+    this.events[event] = callback;
+  }
+
+  off(event: MouseMovingEvents): void {
+    this.events[event] = null;
+  }
+
+  scrollXTo(amount: number) {
+    if (this.options.snap) {
+      this.scrollX = scrollSnap(this.el, amount);
+      this.events.snap?.();
+    } else {
+      this.el.scrollTo(amount, 0);
+      this.scrollX = amount;
+    }
+
+    this.events.update?.(this.scrollX);
+  }
+
+  mount() {
+    this.parentElement.addEventListener('mousedown', this.startMoving);
+    this.parentElement.addEventListener('mouseup', this.endedMoving);
+    this.parentElement.addEventListener('mouseleave', this.endedMoving);
+    this.parentElement.addEventListener('mousemove', this.mouseMoving);
+    this.parentElement.addEventListener('dragstart', this.dragstart, true);
+  }
+
+  destroy() {
+    this.parentElement.removeEventListener('mousedown', this.startMoving);
+    this.parentElement.removeEventListener('mouseup', this.endedMoving);
+    this.parentElement.removeEventListener('mouseleave', this.endedMoving);
+    this.parentElement.removeEventListener('mousemove', this.mouseMoving);
+    this.parentElement.removeEventListener('dragstart', this.dragstart, true);
+  }
+
+  private startMoving = () => {
+    this.isOnMoving = true;
+    this.el.style.removeProperty('scroll-behavior');
+    this.parentElement.style.setProperty('cursor', 'grabbing');
+
+    this.events.start?.();
+    this.events.update?.(this.scrollX);
+  };
+
+  private endedMoving = () => {
+    this.isOnMoving = false;
+    this.el.style.setProperty('scroll-behavior', 'smooth');
+    this.parentElement.style.removeProperty('cursor');
+
+    if (this.options.snap) {
+      delay(0).then(() => {
+        this.scrollX = scrollSnap(this.el, this.scrollX);
+        this.events.snap?.();
+        this.events.update?.(this.scrollX);
       });
     } else {
-      delay(1).then(() => {
-        el.style.removeProperty('pointer-events');
+      delay(0).then(() => {
+        this.el.style.removeProperty('pointer-events');
       });
     }
-    events.end?.(scrollLeft);
+
+    this.events.end?.();
+    this.events.update?.(this.scrollX);
   };
 
-  const onMouseMoving = (event: MouseEvent) => {
-    if (!isOnMoving) return;
-    el.style.pointerEvents = 'none';
+  private mouseMoving = (event: MouseEvent) => {
+    if (!this.isOnMoving) return;
 
-    scrollLeft += -event.movementX;
+    this.el.style.setProperty('pointer-events', 'none');
+    this.scrollX += -event.movementX;
 
-    const maxScroll = -(el.scrollWidth - el.clientWidth);
-
-    if (maxScroll > scrollLeft) {
-      scrollLeft = maxScroll;
+    const maxScroll = -(this.el.scrollWidth - this.el.clientWidth);
+    if (maxScroll > this.scrollX) {
+      this.scrollX = maxScroll;
     }
 
-    if (scrollLeft > 0) {
-      scrollLeft = 0;
+    if (this.scrollX > 0) {
+      this.scrollX = 0;
     }
 
-    events.moving?.(scrollLeft);
-
-    el.scrollTo(scrollLeft, 0);
+    this.events.moving?.();
+    this.events.update?.(this.scrollX);
+    this.el.scrollTo(this.scrollX, 0);
   };
 
-  const onDragstart = (event: DragEvent) => {
+  private dragstart(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
-  };
-
-  const scrollTo = (currentScrollLeft: number) => {
-    if (snapedScroll) {
-      scrollLeft = scrollSnap(el, currentScrollLeft);
-    } else {
-      el.scrollTo(currentScrollLeft, 0);
-      scrollLeft = currentScrollLeft;
-    }
-    events.end?.(scrollLeft);
-  };
-
-  parentEl.addEventListener('mousedown', startMoving);
-  parentEl.addEventListener('mouseup', endedMoving);
-  parentEl.addEventListener('mouseleave', endedMoving);
-  parentEl.addEventListener('mousemove', onMouseMoving);
-  parentEl.addEventListener('dragstart', onDragstart, true);
-
-  const events: Record<MouseMovingEvents, MouseMovingEvent | null> = {
-    start: null,
-    end: null,
-    moving: null,
-  };
-
-  const snap = () => {
-    scrollLeft = scrollSnap(el, scrollLeft);
-    events.end?.(scrollLeft);
-  };
-
-  const destroy = () => {
-    parentEl.removeEventListener('mousedown', startMoving);
-    parentEl.removeEventListener('mouseup', endedMoving);
-    parentEl.removeEventListener('mouseleave', endedMoving);
-    parentEl.removeEventListener('mousemove', onMouseMoving);
-    parentEl.removeEventListener('dragstart', onDragstart, true);
-  };
-
-  const on = (key: MouseMovingEvents, callback: MouseMovingEvent) => {
-    events[key] = callback;
-  };
-
-  const off = (key: MouseMovingEvents) => {
-    events[key] = null;
-  };
-
-  return {
-    destroy,
-    on,
-    off,
-    snap,
-    scrollTo,
-  };
+    return false;
+  }
 }

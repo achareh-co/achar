@@ -16,4 +16,9 @@ export { default as createScrollObserver } from './create-scroll-observer';
 
 export { default as scrollSnap } from './scroll-snap';
 
-export { default as mouseMoving } from './mouse-moving';
+export { default as MouseMoving } from './mouse-moving';
+export type {
+  MouseMovingOptions,
+  MouseMovingEventCallback,
+  MouseMovingEvents,
+} from './mouse-moving';
