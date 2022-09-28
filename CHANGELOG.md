@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/achareh-co/achar/compare/v0.0.5...v0.0.6) (2022-09-28)
+
+
+### Bug Fixes
+
+* refactor `MouseMoving` ([653c0b3](https://github.com/achareh-co/achar/commit/653c0b307c82e9e8e1c20aeea8f6b15f7234951c))
+* refactor `MouseMoving` rewrite class basic ([a240557](https://github.com/achareh-co/achar/commit/a2405577347902af94f2b7f3f486c0dfedfd7db1))
+
 ### [0.0.5](https://github.com/achareh-co/achar/compare/v0.0.4...v0.0.5) (2022-09-21)
 
 
