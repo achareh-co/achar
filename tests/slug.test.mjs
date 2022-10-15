@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, describe, it } from 'vitest';
 import { toSlug, fromSlug } from '../dist/index.mjs';
 
 describe('Helpers string', () => {

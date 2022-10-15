@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, describe, it } from 'vitest';
 import { toEnglishDigits, toPersianDigits, thousandSeparator } from '../dist/index.mjs';
 
 describe('Helpers', () => {
@@ -8,7 +8,6 @@ describe('Helpers', () => {
 
     expect(toEnglishDigits(digits)).to.be.equal(englishDigits);
   });
-
   it('convert Arabic digits to English digits', () => {
     const digits = '١٢٣٤٥٦٧٨٩٠';
     const englishDigits = '1234567890';
