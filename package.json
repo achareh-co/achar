@@ -33,7 +33,7 @@
     "deploy": "vite --config ./playground/vite.config.ts build",
     "build": "tsc && unbuild",
     "lint": "eslint --ext .ts --ignore-path .gitignore .",
-    "test": "vitest --run",
+    "test": "npm run build && vitest --run",
     "test:watch": "vitest --watch",
     "coverage": "vitest run --coverage",
     "prepare": "husky install",
