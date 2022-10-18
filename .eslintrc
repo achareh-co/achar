@@ -22,17 +22,6 @@
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error"
   },
-  "overrides": [
-    {
-      "files": ["test/*.test.mjs"],
-      "extends": [
-        "eslint:recommended",
-        "plugin:prettier/recommended"
-      ],
-      "plugins": [],
-      "parser": ""
-    }
-  ],
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"

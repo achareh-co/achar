@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { toSlug, fromSlug } from '../dist/index.mjs';
+import { toSlug, fromSlug } from '../dist/index';
 
 describe('Helpers string', () => {
   it('convert string to slug', () => {

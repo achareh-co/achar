@@ -1,5 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { toEnglishDigits, toPersianDigits, thousandSeparator } from '../dist/index.mjs';
+import { toEnglishDigits, toPersianDigits, thousandSeparator } from '../dist/index';
 
 describe('Helpers', () => {
   it('convert Persian digits to English digits', () => {
