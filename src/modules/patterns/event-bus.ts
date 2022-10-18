@@ -23,7 +23,7 @@ export default class EventBus {
     if (isNew && this.#preEmitQueue.has(event)) {
       const preEmitQueue = this.#preEmitQueue.get(event) as unknown[][];
       preEmitQueue.forEach((args: unknown[]) => {
-        // eslint-disable-next-line node/no-callback-literal
+        // eslint-disable-next-line n/no-callback-literal
         callback(...args);
       });
 
@@ -48,7 +48,7 @@ export default class EventBus {
     if (this.#events.has(event)) {
       const events = this.#events.get(event) as EventBusEvent[];
       events.forEach((callback: EventBusEvent) => {
-        // eslint-disable-next-line node/no-callback-literal
+        // eslint-disable-next-line n/no-callback-literal
         callback(...args);
       });
     } else {
@@ -63,7 +63,7 @@ export default class EventBus {
 
   once(event: string, callback: EventBusEvent): void {
     const onceCallback = (...args: unknown[]) => {
-      // eslint-disable-next-line node/no-callback-literal
+      // eslint-disable-next-line n/no-callback-literal
       callback(...args);
       this.off(event, onceCallback);
     };
