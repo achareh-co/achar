@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, describe, it } from 'vitest';
 import { fake } from 'sinon';
 import { EventBus } from '../dist/index.mjs';
 
