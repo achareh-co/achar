@@ -1,5 +1,5 @@
 import { expect, describe, it, vi } from 'vitest';
-import { EventBus } from '../dist/index';
+import EventBus from '../src/modules/patterns/event-bus';
 
 describe('Helpers', () => {
   it('emit one event', () => {
