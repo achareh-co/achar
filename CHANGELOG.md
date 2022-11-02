@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/achareh-co/achar/compare/v0.0.6...v0.0.7) (2022-11-02)
+
+
+### Features
+
+* add `html` template literals ([e3d867d](https://github.com/achareh-co/achar/commit/e3d867d117f130f79843993c1551910c165f8e2e))
+
+
+### Bug Fixes
+
+* fix playground error ([271f7b1](https://github.com/achareh-co/achar/commit/271f7b1cb4acb5460f778c61de999e870d32ab79))
+* fixed `ci` test problam ([6f88ac6](https://github.com/achareh-co/achar/commit/6f88ac6067f8a09e34b3512f9607d7cbffc21b28))
+
 ### [0.0.6](https://github.com/achareh-co/achar/compare/v0.0.5...v0.0.6) (2022-09-28)
 
 
