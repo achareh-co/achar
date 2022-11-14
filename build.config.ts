@@ -13,4 +13,7 @@ export default defineBuildConfig({
     inlineDependencies: true,
     esbuild: { target: 'es2016' },
   },
+  replace: {
+    'import.meta.vitest': 'undefined',
+  },
 });
