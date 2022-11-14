@@ -10,23 +10,10 @@ export default function fromSlug(value: string): string {
 if (import.meta.vitest) {
   const { it, expect } = import.meta.vitest;
 
-  it('convert string from slug', () => {
-    const string = 'from-slug';
-    const stringFromSlug = 'from_slug';
+  it('convert slug to snake_case', () => {
+    const slug = 'slug-to-snake-case';
+    const snakeCaseSlug = 'slug_to_snake_case';
 
-    expect(fromSlug(string)).to.be.equal(stringFromSlug);
-  });
-
-  it('convert string from slug (multi slug)', () => {
-    const string = 'from-slug-';
-    const stringFromSlug = 'from_slug_';
-    const string2 = '-from-slug-';
-    const stringFromSlug2 = '_from_slug_';
-    const string3 = '_from-slug-';
-    const stringFromSlug3 = '_from_slug_';
-
-    expect(fromSlug(string)).to.be.equal(stringFromSlug);
-    expect(fromSlug(string2)).to.be.equal(stringFromSlug2);
-    expect(fromSlug(string3)).to.be.equal(stringFromSlug3);
+    expect(fromSlug(slug)).to.be.equal(snakeCaseSlug);
   });
 }
