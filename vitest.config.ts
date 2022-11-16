@@ -8,4 +8,7 @@ export default defineConfig({
       '~': resolve(__dirname, './playground'),
     },
   },
+  test: {
+    includeSource: ['src/**/*.{js,ts}'],
+  },
 });
