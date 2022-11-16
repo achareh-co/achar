@@ -37,7 +37,7 @@
     "test:watch": "vitest --watch",
     "coverage": "vitest run --coverage",
     "prepare": "husky install",
-    "release": "yarn test && npx standard-version && git push --follow-tags && npm publish"
+    "release": "yarn build && yarn test && npx standard-version && git push --follow-tags && npm publish"
   },
   "lint-staged": {
     "*.ts": "eslint --fix",
