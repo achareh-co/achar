@@ -22,3 +22,5 @@ export type {
   MouseMovingEventCallback,
   MouseMovingEvents,
 } from './mouse-moving';
+
+export { default as waitWindowLoad } from './wait-window-load';
