@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/achareh-co/achar/compare/v1.0.2...v1.0.3) (2023-03-14)
+
+
+### Bug Fixes
+
+* fix mouse moving scroll left bug ([afde1a5](https://github.com/achareh-co/achar/commit/afde1a5e8ac9af1ab0c2351cd2797ee3f6efa91b))
+* fix typescript types ([30d3d42](https://github.com/achareh-co/achar/commit/30d3d422143cf7f1efe6861502a33ad1409f3a84))
+
 ### [1.0.2](https://github.com/achareh-co/achar/compare/v1.0.1...v1.0.2) (2022-11-16)
 
 ### [1.0.1](https://github.com/achareh-co/achar/compare/v1.0.0...v1.0.1) (2022-11-16)
