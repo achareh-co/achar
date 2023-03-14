@@ -133,9 +133,8 @@ export default class MouseMoving {
 
   private throttleScrollHandler = createThrottle(this.scroll.bind(this));
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private scroll(event: any) {
-    this.scrollX = event.target.scrollLeft;
+  private scroll() {
+    this.scrollX = this.el.scrollLeft;
     this.events.update?.(this.scrollX);
   }
 }
