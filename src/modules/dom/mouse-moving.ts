@@ -1,5 +1,5 @@
 import scrollSnap from './scroll-snap';
-import { delay } from '../helpers';
+import { delay, createThrottle } from '../helpers';
 
 export interface MouseMovingOptions {
   snap: boolean;
@@ -59,6 +59,9 @@ export default class MouseMoving {
     this.parentElement.addEventListener('mouseleave', this.endedMoving);
     this.parentElement.addEventListener('mousemove', this.mouseMoving);
     this.parentElement.addEventListener('dragstart', this.dragstart, true);
+
+    this.el.addEventListener('scroll', this.throttleScrollHandler, { passive: true });
+    window.addEventListener('resize', this.throttleScrollHandler, { passive: true });
   }
 
   destroy() {
@@ -67,6 +70,9 @@ export default class MouseMoving {
     this.parentElement.removeEventListener('mouseleave', this.endedMoving);
     this.parentElement.removeEventListener('mousemove', this.mouseMoving);
     this.parentElement.removeEventListener('dragstart', this.dragstart, true);
+
+    this.el.removeEventListener('scroll', this.throttleScrollHandler);
+    window.removeEventListener('resize', this.throttleScrollHandler);
   }
 
   private startMoving = () => {
@@ -123,5 +129,12 @@ export default class MouseMoving {
     event.preventDefault();
     event.stopPropagation();
     return false;
+  }
+
+  private throttleScrollHandler = createThrottle(this.scroll.bind(this));
+
+  private scroll() {
+    this.scrollX = this.el.scrollLeft;
+    this.events.update?.(this.scrollX);
   }
 }
