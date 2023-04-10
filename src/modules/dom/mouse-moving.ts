@@ -14,6 +14,7 @@ export default class MouseMoving {
   isOnMoving = false;
 
   scrollX = 0;
+  scrollXStartMoving = 0;
   events: Record<MouseMovingEvents, MouseMovingEventCallback | null> = {
     start: null,
     moving: null,
@@ -77,6 +78,8 @@ export default class MouseMoving {
 
   private startMoving = () => {
     this.isOnMoving = true;
+    this.scrollXStartMoving = this.scrollX;
+
     this.el.style.removeProperty('scroll-behavior');
     this.parentElement.style.setProperty('cursor', 'grabbing');
 
@@ -108,8 +111,12 @@ export default class MouseMoving {
   private mouseMoving = (event: MouseEvent) => {
     if (!this.isOnMoving) return;
 
-    this.el.style.setProperty('pointer-events', 'none');
     this.scrollX += -event.movementX;
+
+    if (Math.abs(this.scrollXStartMoving - this.scrollX) >= 10) {
+      // <= 10px moving
+      this.el.style.setProperty('pointer-events', 'none');
+    }
 
     const maxScroll = -(this.el.scrollWidth - this.el.clientWidth);
     if (maxScroll > this.scrollX) {
