@@ -92,17 +92,15 @@ export default class MouseMoving {
     this.el.style.setProperty('scroll-behavior', 'smooth');
     this.parentElement.style.removeProperty('cursor');
 
-    if (this.options.snap) {
-      delay(0).then(() => {
+    delay(0).then(() => {
+      if (this.options.snap) {
         this.scrollX = scrollSnap(this.el, this.scrollX);
         this.events.snap?.();
         this.events.update?.(this.scrollX);
-      });
-    } else {
-      delay(0).then(() => {
+      } else {
         this.el.style.removeProperty('pointer-events');
-      });
-    }
+      }
+    });
 
     this.events.end?.();
     this.events.update?.(this.scrollX);
