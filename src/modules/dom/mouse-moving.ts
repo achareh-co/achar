@@ -1,5 +1,5 @@
 import scrollSnap from './scroll-snap';
-import { delay, createThrottle } from '../helpers';
+import { delay, createThrottle, createDebounce } from '../helpers';
 
 export interface MouseMovingOptions {
   snap: boolean;
@@ -94,9 +94,7 @@ export default class MouseMoving {
 
     delay(0).then(() => {
       if (this.options.snap) {
-        this.scrollX = scrollSnap(this.el, this.scrollX);
-        this.events.snap?.();
-        this.events.update?.(this.scrollX);
+        this.snap();
       } else {
         this.el.style.removeProperty('pointer-events');
       }
@@ -137,9 +135,20 @@ export default class MouseMoving {
   }
 
   private throttleScrollHandler = createThrottle(this.scroll.bind(this));
+  private debouncSnapHandler = createDebounce(this.snap.bind(this), 250);
 
   private scroll() {
     this.scrollX = this.el.scrollLeft;
+    this.events.update?.(this.scrollX);
+
+    if (this.options.snap && !this.isOnMoving) {
+      this.debouncSnapHandler();
+    }
+  }
+
+  private snap() {
+    this.scrollX = scrollSnap(this.el, this.scrollX);
+    this.events.snap?.();
     this.events.update?.(this.scrollX);
   }
 }
