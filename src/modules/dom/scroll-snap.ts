@@ -8,6 +8,7 @@ export default function scrollSnap(scrollParent: HTMLElement, scrollLeft: number
   if (!scrollParent) return 0;
 
   scrollParent.style.removeProperty('pointer-events');
+  scrollParent.style.setProperty('scroll-behavior', 'smooth');
 
   const scrollElementChild = scrollParent.children?.[0];
 
