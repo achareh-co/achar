@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/achareh-co/achar/compare/v1.0.3...v1.0.4) (2023-04-24)
+
+
+### Bug Fixes
+
+* fix `MouseMoving` click item ([5a12b97](https://github.com/achareh-co/achar/commit/5a12b9793c452af534944959cb37ffef991f2438))
+* fix code style ([ee4681d](https://github.com/achareh-co/achar/commit/ee4681d10358b79548b748668d694a4c2b97bcd8))
+* fix scroll snap bug on wheel event ([841d941](https://github.com/achareh-co/achar/commit/841d9418a0c8adc67a4908cc33da4a91a0eb493a))
+* smooth scroll on snap ([2158f02](https://github.com/achareh-co/achar/commit/2158f02c100af754c492873aaaabaf9ee8f374ef))
+
 ### [1.0.3](https://github.com/achareh-co/achar/compare/v1.0.2...v1.0.3) (2023-03-14)
 
 
