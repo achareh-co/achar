@@ -1,5 +1,5 @@
 import scrollSnap from './scroll-snap';
-import { delay, createThrottle } from '../helpers';
+import { delay, createThrottle, createDebounce } from '../helpers';
 
 export interface MouseMovingOptions {
   snap: boolean;
@@ -14,6 +14,7 @@ export default class MouseMoving {
   isOnMoving = false;
 
   scrollX = 0;
+  scrollXStartMoving = 0;
   events: Record<MouseMovingEvents, MouseMovingEventCallback | null> = {
     start: null,
     moving: null,
@@ -77,6 +78,8 @@ export default class MouseMoving {
 
   private startMoving = () => {
     this.isOnMoving = true;
+    this.scrollXStartMoving = this.scrollX;
+
     this.el.style.removeProperty('scroll-behavior');
     this.parentElement.style.setProperty('cursor', 'grabbing');
 
@@ -89,17 +92,13 @@ export default class MouseMoving {
     this.el.style.setProperty('scroll-behavior', 'smooth');
     this.parentElement.style.removeProperty('cursor');
 
-    if (this.options.snap) {
-      delay(0).then(() => {
-        this.scrollX = scrollSnap(this.el, this.scrollX);
-        this.events.snap?.();
-        this.events.update?.(this.scrollX);
-      });
-    } else {
-      delay(0).then(() => {
+    delay(0).then(() => {
+      if (this.options.snap) {
+        this.snap();
+      } else {
         this.el.style.removeProperty('pointer-events');
-      });
-    }
+      }
+    });
 
     this.events.end?.();
     this.events.update?.(this.scrollX);
@@ -108,8 +107,12 @@ export default class MouseMoving {
   private mouseMoving = (event: MouseEvent) => {
     if (!this.isOnMoving) return;
 
-    this.el.style.setProperty('pointer-events', 'none');
     this.scrollX += -event.movementX;
+
+    if (Math.abs(this.scrollXStartMoving - this.scrollX) >= 10) {
+      // <= 10px moving
+      this.el.style.setProperty('pointer-events', 'none');
+    }
 
     const maxScroll = -(this.el.scrollWidth - this.el.clientWidth);
     if (maxScroll > this.scrollX) {
@@ -132,9 +135,20 @@ export default class MouseMoving {
   }
 
   private throttleScrollHandler = createThrottle(this.scroll.bind(this));
+  private debouncSnapHandler = createDebounce(this.snap.bind(this), 250);
 
   private scroll() {
     this.scrollX = this.el.scrollLeft;
+    this.events.update?.(this.scrollX);
+
+    if (this.options.snap && !this.isOnMoving) {
+      this.debouncSnapHandler();
+    }
+  }
+
+  private snap() {
+    this.scrollX = scrollSnap(this.el, this.scrollX);
+    this.events.snap?.();
     this.events.update?.(this.scrollX);
   }
 }
