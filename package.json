@@ -1,6 +1,6 @@
 {
   "name": "@achareh/achar",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Set of modules that we use in Achareh",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.mts",
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.mjs"
       },
       "require": {

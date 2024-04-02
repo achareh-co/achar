@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.7](https://github.com/achareh-co/achar/compare/v1.0.6...v1.0.7) (2024-04-02)
+
+
+### Bug Fixes
+
+* fix package types ([df68601](https://github.com/achareh-co/achar/commit/df68601d52a47eef0f57b52bffdb30f2490e8ce9))
+
 ### [1.0.6](https://github.com/achareh-co/achar/compare/v1.0.5...v1.0.6) (2023-09-09)
 
 
