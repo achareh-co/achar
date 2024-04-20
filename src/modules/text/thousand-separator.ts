@@ -5,8 +5,7 @@
  * @returns string formatted text, ex: 300,000
  */
 export default function thousandSeparator(text: string | number, separator = ','): string {
-  if (!text) return '';
-
+  text = text ?? '';
   return text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
