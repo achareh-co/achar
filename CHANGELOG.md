@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.8](https://github.com/achareh-co/achar/compare/v1.0.7...v1.0.8) (2024-04-20)
+
+
+### Bug Fixes
+
+* fix thousandSeparator bug ([b69c8cf](https://github.com/achareh-co/achar/commit/b69c8cf38c57007f65448c52d2fe81b1a3e818b9))
+
 ### [1.0.7](https://github.com/achareh-co/achar/compare/v1.0.6...v1.0.7) (2024-04-02)
 
 
