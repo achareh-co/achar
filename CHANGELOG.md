@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.9](https://github.com/achareh-co/achar/compare/v1.0.8...v1.0.9) (2024-04-29)
+
+
+### Bug Fixes
+
+* fix create-script types ([1495f81](https://github.com/achareh-co/achar/commit/1495f819ee391ca513263de03f53a665698fcb03))
+
 ### [1.0.8](https://github.com/achareh-co/achar/compare/v1.0.7...v1.0.8) (2024-04-20)
 
 
