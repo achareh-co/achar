@@ -13,6 +13,8 @@ export interface HTMLScriptOptions {
   onError?: EventListenerOrEventListenerObject;
   // eslint-disable-next-line no-undef
   onAbort?: EventListenerOrEventListenerObject;
+  [key: string]: unknown;
+  [event: `on${string}`]: EventListenerOrEventListenerObject | undefined;
 }
 
 export default function createScript(
@@ -48,7 +50,8 @@ function createScriptElement(src: string, attrs: HTMLScriptOptions = {}): HTMLSc
   attrs.type = attrs.type || 'text/javascript';
   Object.entries(attrs).forEach(([key, value]) => {
     if (/^on/.test(key)) {
-      el.addEventListener(key.replace(/^on/, '').toLowerCase(), value);
+      // eslint-disable-next-line prettier/prettier
+      el.addEventListener(key.replace(/^on/, '').toLowerCase(), value as EventListenerOrEventListenerObject);
     } else if (typeof value === 'string') {
       el.setAttribute(key, value);
     } else if (value === true) {
