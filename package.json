@@ -52,7 +52,7 @@
     "*.test.mjs": "eslint --fix"
   },
   "devDependencies": {
-    "@babel/types": "7.20.2",
+    "@babel/types": "7.25.9",
     "@types/flat": "5.0.2",
     "@types/node": "18.11.9",
     "@typescript-eslint/eslint-plugin": "5.42.1",
