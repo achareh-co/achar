@@ -67,7 +67,10 @@ if (import.meta.vitest) {
 
     expect(observe).toHaveBeenCalledWith(node);
 
-    observerCallback([{ target: node } as IntersectionObserverEntry], {} as IntersectionObserver);
+    observerCallback(
+      [{ target: node } as unknown as IntersectionObserverEntry],
+      {} as IntersectionObserver,
+    );
     expect(onObserve).toHaveBeenCalledWith(expect.objectContaining({ target: node }), 0);
 
     disconnectFn();
