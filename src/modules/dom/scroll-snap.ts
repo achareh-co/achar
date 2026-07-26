@@ -42,3 +42,39 @@ export default function scrollSnap(scrollParent: HTMLElement, scrollLeft: number
 
   return scrollLeft;
 }
+
+if (import.meta.vitest) {
+  const { it, expect, vi, afterEach } = import.meta.vitest;
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('returns 0 when parent is missing or has no children', () => {
+    expect(scrollSnap(null as unknown as HTMLElement, -10)).toBe(0);
+
+    const empty = document.createElement('div');
+    expect(scrollSnap(empty, -10)).toBe(0);
+  });
+
+  it('snaps scroll position based on child width', () => {
+    const parent = document.createElement('div');
+    const child = document.createElement('div');
+    parent.appendChild(child);
+
+    Object.defineProperty(child, 'clientWidth', { value: 100 });
+    Object.defineProperty(parent, 'clientWidth', { value: 200 });
+    Object.defineProperty(parent, 'scrollWidth', { value: 500 });
+    vi.spyOn(window, 'getComputedStyle').mockReturnValue({
+      marginLeft: '10px',
+      marginRight: '10px',
+    } as CSSStyleDeclaration);
+
+    const scrollTo = vi.fn();
+    Object.defineProperty(parent, 'scrollTo', { value: scrollTo });
+
+    const result = scrollSnap(parent, -60);
+    expect(typeof result).toBe('number');
+    expect(scrollTo).toHaveBeenCalledWith(result, 0);
+  });
+}

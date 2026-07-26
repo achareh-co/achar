@@ -16,4 +16,8 @@ if (import.meta.vitest) {
 
     expect(toSlug(snakeCaseSlug)).toBe(slug);
   });
+
+  it('returns empty string for empty input', () => {
+    expect(toSlug('')).toBe('');
+  });
 }

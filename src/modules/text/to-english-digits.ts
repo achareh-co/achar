@@ -42,4 +42,10 @@ if (import.meta.vitest) {
 
     expect(toEnglishDigits(text)).toBe(englishDigitsText);
   });
+
+  it('handles empty and numeric inputs', () => {
+    expect(toEnglishDigits('')).toBe('');
+    expect(toEnglishDigits(0)).toBe('');
+    expect(toEnglishDigits(123)).toBe('123');
+  });
 }

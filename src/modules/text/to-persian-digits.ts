@@ -42,4 +42,10 @@ if (import.meta.vitest) {
 
     expect(toPersianDigits(text)).toBe(persianDigitsText);
   });
+
+  it('handles empty and numeric inputs', () => {
+    expect(toPersianDigits('')).toBe('');
+    expect(toPersianDigits(0)).toBe('');
+    expect(toPersianDigits(123)).toBe('۱۲۳');
+  });
 }
