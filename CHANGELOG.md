@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/achareh-co/achar/compare/v2.0.0...v2.0.1) (2026-07-26)
+
+
+### Bug Fixes
+
+* **main:** cast IntersectionObserverEntry via unknown in test ([d78f962](https://github.com/achareh-co/achar/commit/d78f962a17fdffc84f3a838d7635ec6e75c425ff))
+
 ## [2.0.0](https://github.com/achareh-co/achar/compare/v1.0.9...v2.0.0) (2026-07-26)
 
 
