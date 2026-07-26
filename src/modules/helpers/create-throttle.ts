@@ -35,7 +35,7 @@ export default function createThrottle(
       isThrottling = true;
 
       // call immediately if leading is enabled
-      leading && boundedCb();
+      if (leading) boundedCb();
     }
   };
 }

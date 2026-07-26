@@ -19,14 +19,14 @@ if (import.meta.vitest) {
     const entry = '<p>this is simple html paragraph with some texts</p>';
     const result = entry;
 
-    expect(html`${entry}`).to.be.equal(result);
+    expect(html`${entry}`).toBe(result);
   });
 
   it('process a simple paragraph with attributes', () => {
     const entry = '<p id="text" class="normal-text">this is simple html paragraph</p>';
     const result = entry;
 
-    expect(html`${entry}`).to.be.equal(result);
+    expect(html`${entry}`).toBe(result);
   });
 
   it('process a simple paragraph with attributes and extra spaces', () => {
@@ -37,6 +37,6 @@ if (import.meta.vitest) {
     `;
     const result = '<p id="text" class="normal-text"> this is simple html paragraph </p>';
 
-    expect(html`${entry}`).to.be.equal(result);
+    expect(html`${entry}`).toBe(result);
   });
 }

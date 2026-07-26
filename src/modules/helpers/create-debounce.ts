@@ -30,6 +30,6 @@ export default function createDebounce(
     // set new timer
     timer = setTimeout(doAfterTimeout, delay);
 
-    callItNow && boundedCb();
+    if (callItNow) boundedCb();
   };
 }

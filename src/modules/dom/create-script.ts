@@ -7,11 +7,8 @@ export interface HTMLScriptOptions {
   nonce?: string;
   referrerpolicy?: string;
   type?: string;
-  // eslint-disable-next-line no-undef
   onLoad?: EventListenerOrEventListenerObject;
-  // eslint-disable-next-line no-undef
   onError?: EventListenerOrEventListenerObject;
-  // eslint-disable-next-line no-undef
   onAbort?: EventListenerOrEventListenerObject;
   [key: string]: unknown;
   [event: `on${string}`]: EventListenerOrEventListenerObject | undefined;

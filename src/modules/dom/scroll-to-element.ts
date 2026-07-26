@@ -19,7 +19,7 @@ export default function scrollToElement(
 
   const { x = 'center', y = 'center', marginX = 0, marginY = 0 } = options || {};
 
-  let offsetLeft = 0;
+  let offsetLeft: number;
   if (x === 'start') {
     offsetLeft = el.offsetLeft + el.clientWidth - parentEl.clientWidth + marginX;
   } else if (x === 'end') {
@@ -28,7 +28,7 @@ export default function scrollToElement(
     offsetLeft = el.offsetLeft + el.clientWidth / 2 - parentEl.clientWidth / 2;
   }
 
-  let offsetTop = 0;
+  let offsetTop: number;
   if (y === 'start') {
     offsetTop = el.offsetTop - marginY;
   } else if (y === 'end') {

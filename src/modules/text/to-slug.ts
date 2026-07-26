@@ -14,6 +14,6 @@ if (import.meta.vitest) {
     const snakeCaseSlug = 'slug_to_snake_case';
     const slug = 'slug-to-snake-case';
 
-    expect(toSlug(snakeCaseSlug)).to.be.equal(slug);
+    expect(toSlug(snakeCaseSlug)).toBe(slug);
   });
 }
