@@ -24,3 +24,5 @@ export type {
 } from './mouse-moving';
 
 export { default as waitWindowLoad } from './wait-window-load';
+
+export { default as attrSupport } from './attr-support';

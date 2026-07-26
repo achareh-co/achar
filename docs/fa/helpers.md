@@ -2,7 +2,7 @@
 
 [English](../en/helpers.md) · [فهرست API](./index.md)
 
-ابزارهای زمان‌بندی، بررسی query و retry با backoff.
+ابزارهای زمان‌بندی، بررسی query، retry با backoff، UUID، گرد کردن و decode کردن URI.
 
 ```ts
 import {
@@ -13,6 +13,10 @@ import {
   retryWithDelay,
   maxRetryError,
   taskCanceledError,
+  generateV4UUID,
+  round,
+  getFormattedTime,
+  decodeURIComponentBetter,
 } from '@achareh/achar'
 ```
 
@@ -173,3 +177,83 @@ taskCanceledError // Error: 'Task Cancelled'
 ```
 
 وقتی در حین انتظار، `signal` abort شود توسط `retryWithDelay` پرتاب می‌شود.
+
+---
+
+## `generateV4UUID`
+
+**نوع:** function
+
+```ts
+generateV4UUID(): string
+```
+
+یک UUID نسخهٔ ۴ مطابق RFC 4122 با `crypto.getRandomValues` می‌سازد.
+
+```ts
+const id = generateV4UUID()
+// مثلاً "550e8400-e29b-41d4-a716-446655440000"
+```
+
+---
+
+## `round`
+
+**نوع:** function
+
+```ts
+round(value: number, exp?: number): number
+```
+
+`value` را تا `exp` رقم اعشار گرد می‌کند. وقتی `exp` نباشد یا `0` باشد از `Math.round` استفاده می‌کند. برای ورودی نامعتبر `NaN` برمی‌گرداند.
+
+| پارامتر | نوع | پیش‌فرض | توضیح |
+|---------|-----|---------|--------|
+| `value` | `number` | — | عددی که گرد می‌شود |
+| `exp` | `number` | — | تعداد رقم اعشار |
+
+```ts
+round(1.2345, 2) // 1.23
+round(1.5) // 2
+```
+
+---
+
+## `getFormattedTime`
+
+**نوع:** function
+
+```ts
+getFormattedTime(timeInSeconds: number): string
+```
+
+مدت را بر حسب ثانیه به صورت `mm':ss"` فرمت می‌کند؛ اگر حداقل یک ساعت باشد به صورت `hh:mm':ss"`.
+
+| پارامتر | نوع | توضیح |
+|---------|-----|--------|
+| `timeInSeconds` | `number` | مجموع ثانیه‌ها |
+
+```ts
+getFormattedTime(65) // "01':05\""
+getFormattedTime(3661) // "01:01':01\""
+```
+
+---
+
+## `decodeURIComponentBetter`
+
+**نوع:** function
+
+```ts
+decodeURIComponentBetter(uri: string): string
+```
+
+کامپوننت URI را آن‌قدر decode می‌کند تا دیگر تغییر نکند (برای double-encoding).
+
+| پارامتر | نوع | توضیح |
+|---------|-----|--------|
+| `uri` | `string` | کامپوننت encodeشدهٔ URI |
+
+```ts
+decodeURIComponentBetter('hello%2520world') // "hello world"
+```

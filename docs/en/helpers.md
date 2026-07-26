@@ -2,7 +2,7 @@
 
 [فارسی](../fa/helpers.md) · [API index](./index.md)
 
-Timing helpers, query checks, and retry with backoff.
+Timing helpers, query checks, retry with backoff, UUID, rounding, and URI decoding.
 
 ```ts
 import {
@@ -13,6 +13,10 @@ import {
   retryWithDelay,
   maxRetryError,
   taskCanceledError,
+  generateV4UUID,
+  round,
+  getFormattedTime,
+  decodeURIComponentBetter,
 } from '@achareh/achar'
 ```
 
@@ -173,3 +177,83 @@ taskCanceledError // Error: 'Task Cancelled'
 ```
 
 Thrown by `retryWithDelay` when `signal` is aborted during a wait.
+
+---
+
+## `generateV4UUID`
+
+**Kind:** function
+
+```ts
+generateV4UUID(): string
+```
+
+Generates an RFC 4122 version 4 UUID via `crypto.getRandomValues`.
+
+```ts
+const id = generateV4UUID()
+// e.g. "550e8400-e29b-41d4-a716-446655440000"
+```
+
+---
+
+## `round`
+
+**Kind:** function
+
+```ts
+round(value: number, exp?: number): number
+```
+
+Rounds `value` to `exp` decimal places. When `exp` is omitted or `0`, uses `Math.round`. Returns `NaN` for invalid inputs.
+
+| Param | Type | Default | Description |
+|-------|------|---------|-------------|
+| `value` | `number` | — | Number to round |
+| `exp` | `number` | — | Decimal places |
+
+```ts
+round(1.2345, 2) // 1.23
+round(1.5) // 2
+```
+
+---
+
+## `getFormattedTime`
+
+**Kind:** function
+
+```ts
+getFormattedTime(timeInSeconds: number): string
+```
+
+Formats a duration in seconds as `mm':ss"`, or `hh:mm':ss"` when the duration is at least one hour.
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `timeInSeconds` | `number` | Total seconds |
+
+```ts
+getFormattedTime(65) // "01':05\""
+getFormattedTime(3661) // "01:01':01\""
+```
+
+---
+
+## `decodeURIComponentBetter`
+
+**Kind:** function
+
+```ts
+decodeURIComponentBetter(uri: string): string
+```
+
+Decodes a URI component repeatedly until it no longer changes (handles double-encoding).
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `uri` | `string` | Encoded URI component |
+
+```ts
+decodeURIComponentBetter('hello%2520world') // "hello world"
+```

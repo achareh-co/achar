@@ -2,7 +2,7 @@
 
 [فارسی](../fa/dom.md) · [API index](./index.md)
 
-Browser DOM helpers: smooth scroll, script injection, intersection observing, and drag-to-scroll.
+Browser DOM helpers: smooth scroll, script injection, intersection observing, drag-to-scroll, and attribute feature detection.
 
 ```ts
 import {
@@ -16,6 +16,7 @@ import {
   scrollSnap,
   MouseMoving,
   waitWindowLoad,
+  attrSupport,
 } from '@achareh/achar'
 import type {
   HTMLScriptOptions,
@@ -327,4 +328,28 @@ Resolves immediately if `document.readyState === 'complete'`, otherwise on `wind
 
 ```ts
 await waitWindowLoad()
+```
+
+---
+
+## `attrSupport`
+
+**Kind:** function
+
+```ts
+attrSupport<K extends keyof HTMLElementTagNameMap>(
+  attr: string,
+  el: K,
+): boolean
+```
+
+Returns whether `attr` exists on a newly created element of tag `el`. Returns `false` when `document` is unavailable.
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `attr` | `string` | Attribute name to detect |
+| `el` | `keyof HTMLElementTagNameMap` | HTML tag name |
+
+```ts
+attrSupport('loading', 'img') // true in modern browsers
 ```

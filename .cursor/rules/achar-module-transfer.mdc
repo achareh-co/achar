@@ -1,0 +1,36 @@
+---
+description: Criteria and patterns for adding shared helpers to @achareh/achar
+alwaysApply: true
+---
+
+# Achar module transfer
+
+When promoting helpers from an Achareh frontend (`app/utils`, etc.) into `@achareh/achar`:
+
+## Transfer only if
+
+- Pure / framework-agnostic (no Nuxt `useCookie`, `import.meta.dev`, Vue `nextTick`, project CSS selectors)
+- Not tied to Achareh domain enums, cookie names, route allowlists, toast copy, GA/Intrack, or CDN URL builders
+- Reusable across apps (prefer frequently used helpers)
+
+## Do not transfer (explicit)
+
+- `getMimeType`, `getRelativeTitles`
+- `regex.ts` validation constants
+- `is-fetch-abort.ts` / `isFetchAbortError`
+- `web-api.ts` (`webShareApi`, `webOtpApi`)
+- `router-tools.ts` (including `isExternalLink`)
+- `image-observation.ts`
+- `web-socket.ts` / `WebSocketApi`
+- cookies, types, query-helper (`resizeFn`), performance, toast, app-handler, app-defaults, custom-ga, event-tracker, layout-routes, afetch-logger, custom-browser-timing
+- Thin wrappers that only instantiate APIs already in achar (e.g. `new EventBus()`)
+
+## Adding a module
+
+1. One kebab-case file under `src/modules/<category>/` with a **default export** for a single function
+2. Colocated tests: `if (import.meta.vitest) { ... }`
+3. Re-export from the category `index.ts` (root already re-exports categories)
+4. Document in **both** `docs/en/<category>.md` and `docs/fa/<category>.md` (update the import block)
+5. New category → also wire `src/index.ts` and `docs/*/index.md` (+ README tables if present)
+
+Keep public names stable with the source app when migrating (`generateV4UUID`, `round`, …).

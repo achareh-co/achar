@@ -2,7 +2,7 @@
 
 [English](../en/dom.md) · [فهرست API](./index.md)
 
-کمکی‌های DOM مرورگر: اسکرول نرم، تزریق اسکریپت، IntersectionObserver و drag-to-scroll.
+کمکی‌های DOM مرورگر: اسکرول نرم، تزریق اسکریپت، IntersectionObserver، drag-to-scroll و تشخیص پشتیبانی attribute.
 
 ```ts
 import {
@@ -16,6 +16,7 @@ import {
   scrollSnap,
   MouseMoving,
   waitWindowLoad,
+  attrSupport,
 } from '@achareh/achar'
 import type {
   HTMLScriptOptions,
@@ -327,4 +328,28 @@ waitWindowLoad(): Promise<void>
 
 ```ts
 await waitWindowLoad()
+```
+
+---
+
+## `attrSupport`
+
+**نوع:** function
+
+```ts
+attrSupport<K extends keyof HTMLElementTagNameMap>(
+  attr: string,
+  el: K,
+): boolean
+```
+
+بررسی می‌کند آیا `attr` روی یک element تازه‌ساخته از تگ `el` وجود دارد. اگر `document` در دسترس نباشد `false` برمی‌گرداند.
+
+| پارامتر | نوع | توضیح |
+|---------|-----|--------|
+| `attr` | `string` | نام attribute برای تشخیص |
+| `el` | `keyof HTMLElementTagNameMap` | نام تگ HTML |
+
+```ts
+attrSupport('loading', 'img') // در مرورگرهای مدرن true
 ```
