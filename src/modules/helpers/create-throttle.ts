@@ -35,7 +35,66 @@ export default function createThrottle(
       isThrottling = true;
 
       // call immediately if leading is enabled
-      leading && boundedCb();
+      if (leading) boundedCb();
     }
   };
+}
+
+if (import.meta.vitest) {
+  const { it, expect, vi, beforeEach, afterEach } = import.meta.vitest;
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('throttles trailing calls with positive delay', () => {
+    const cb = vi.fn();
+    const throttled = createThrottle(cb, 100);
+
+    throttled('a');
+    throttled('b');
+    expect(cb).not.toHaveBeenCalled();
+
+    vi.advanceTimersByTime(100);
+    expect(cb).toHaveBeenCalledTimes(1);
+    expect(cb).toHaveBeenCalledWith('a');
+  });
+
+  it('calls immediately when leading is true', () => {
+    const cb = vi.fn();
+    const throttled = createThrottle(cb, 100, true);
+
+    throttled('a');
+    expect(cb).toHaveBeenCalledTimes(1);
+    expect(cb).toHaveBeenCalledWith('a');
+
+    throttled('b');
+    expect(cb).toHaveBeenCalledTimes(1);
+
+    vi.advanceTimersByTime(100);
+    throttled('c');
+    expect(cb).toHaveBeenCalledTimes(2);
+    expect(cb).toHaveBeenCalledWith('c');
+  });
+
+  it('uses requestAnimationFrame when delay is negative', () => {
+    const cb = vi.fn();
+    const raf = vi.spyOn(globalThis, 'requestAnimationFrame').mockImplementation((fn) => {
+      fn(0);
+      return 1;
+    });
+
+    const throttled = createThrottle(cb, -1);
+    throttled('a');
+
+    expect(raf).toHaveBeenCalled();
+    expect(cb).toHaveBeenCalledTimes(1);
+    expect(cb).toHaveBeenCalledWith('a');
+
+    raf.mockRestore();
+  });
 }

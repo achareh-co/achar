@@ -30,6 +30,49 @@ export default function createDebounce(
     // set new timer
     timer = setTimeout(doAfterTimeout, delay);
 
-    callItNow && boundedCb();
+    if (callItNow) boundedCb();
   };
+}
+
+if (import.meta.vitest) {
+  const { it, expect, vi, beforeEach, afterEach } = import.meta.vitest;
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('calls callback once after trailing delay', () => {
+    const cb = vi.fn();
+    const debounced = createDebounce(cb, 100);
+
+    debounced('a');
+    debounced('b');
+    debounced('c');
+
+    expect(cb).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(100);
+    expect(cb).toHaveBeenCalledTimes(1);
+    expect(cb).toHaveBeenCalledWith('c');
+  });
+
+  it('calls immediately when immediate is true', () => {
+    const cb = vi.fn();
+    const debounced = createDebounce(cb, 100, true);
+
+    debounced('first');
+    expect(cb).toHaveBeenCalledTimes(1);
+    expect(cb).toHaveBeenCalledWith('first');
+
+    debounced('second');
+    expect(cb).toHaveBeenCalledTimes(1);
+
+    vi.advanceTimersByTime(100);
+    debounced('third');
+    expect(cb).toHaveBeenCalledTimes(2);
+    expect(cb).toHaveBeenCalledWith('third');
+  });
 }

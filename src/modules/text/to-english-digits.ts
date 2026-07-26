@@ -26,20 +26,26 @@ if (import.meta.vitest) {
     const digits = '۱۲۳۴۵۶۷۸۹۰';
     const englishDigits = '1234567890';
 
-    expect(toEnglishDigits(digits)).to.be.equal(englishDigits);
+    expect(toEnglishDigits(digits)).toBe(englishDigits);
   });
 
   it('convert Arabic digits to English digits', () => {
     const digits = '١٢٣٤٥٦٧٨٩٠';
     const englishDigits = '1234567890';
 
-    expect(toEnglishDigits(digits)).to.be.equal(englishDigits);
+    expect(toEnglishDigits(digits)).toBe(englishDigits);
   });
 
   it('convert digits inside a text to English digits', () => {
     const text = 'This is text containing ۱۲۳۴۵۶۷۸۹۰ and ١٢٣٤٥٦٧٨٩٠ for testing.';
     const englishDigitsText = 'This is text containing 1234567890 and 1234567890 for testing.';
 
-    expect(toEnglishDigits(text)).to.be.equal(englishDigitsText);
+    expect(toEnglishDigits(text)).toBe(englishDigitsText);
+  });
+
+  it('handles empty and numeric inputs', () => {
+    expect(toEnglishDigits('')).toBe('');
+    expect(toEnglishDigits(0)).toBe('');
+    expect(toEnglishDigits(123)).toBe('123');
   });
 }

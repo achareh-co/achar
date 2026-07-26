@@ -18,6 +18,10 @@
   ],
   "sideEffects": false,
   "type": "module",
+  "packageManager": "yarn@4.9.1",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "exports": {
     ".": {
       "import": {
@@ -40,11 +44,11 @@
     "dev": "vite --config ./playground/vite.config.ts",
     "deploy": "vite --config ./playground/vite.config.ts build",
     "build": "tsc && unbuild",
-    "lint": "eslint --ext .ts --ignore-path .gitignore .",
+    "lint": "eslint .",
     "test": "vitest --run",
     "test:watch": "vitest --watch",
     "coverage": "vitest run --coverage",
-    "prepare": "husky install",
+    "prepare": "husky",
     "release": "yarn build && yarn test && npx standard-version && git push --follow-tags && npm publish"
   },
   "lint-staged": {
@@ -52,28 +56,24 @@
     "*.test.mjs": "eslint --fix"
   },
   "devDependencies": {
-    "@babel/types": "7.20.2",
-    "@types/flat": "5.0.2",
-    "@types/node": "18.11.9",
-    "@typescript-eslint/eslint-plugin": "5.42.1",
-    "@typescript-eslint/parser": "5.42.1",
-    "c8": "7.12.0",
-    "eslint": "8.27.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "husky": "8.0.2",
-    "jsdom": "20.0.2",
-    "lint-staged": "13.0.3",
-    "path": "0.12.7",
-    "prettier": "2.7.1",
+    "@babel/types": "8.0.4",
+    "@eslint/js": "10.0.1",
+    "@types/node": "22.20.1",
+    "@vitest/coverage-v8": "4.1.10",
+    "eslint": "10.8.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.6",
+    "happy-dom": "^20.11.1",
+    "husky": "9.1.7",
+    "lint-staged": "17.2.0",
+    "prettier": "3.9.6",
     "standard-version": "9.5.0",
-    "typescript": "4.8.4",
-    "unbuild": "0.9.4",
-    "vite": "3.2.3",
-    "vitest": "0.25.2"
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.65.0",
+    "unbuild": "3.6.1",
+    "vite": "8.1.5",
+    "vitest": "4.1.10"
   },
-  "dependencies": {},
-  "peerDependencies": {},
   "directories": {
     "test": "tests"
   }

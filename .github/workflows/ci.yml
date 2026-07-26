@@ -15,18 +15,23 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node: [14, 16]
+        node: [20, 22]
 
     steps:
-      - uses: actions/setup-node@v3
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
-      - name: checkout
-        uses: actions/checkout@master
+      - name: Enable Corepack / Yarn
+        run: |
+          corepack enable
+          corepack install -g --cache-only ./corepack.tgz
 
       - name: Install dependencies
-        run: yarn
+        run: yarn --immutable
 
       - name: Lint
         run: yarn lint

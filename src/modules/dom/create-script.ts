@@ -7,11 +7,8 @@ export interface HTMLScriptOptions {
   nonce?: string;
   referrerpolicy?: string;
   type?: string;
-  // eslint-disable-next-line no-undef
   onLoad?: EventListenerOrEventListenerObject;
-  // eslint-disable-next-line no-undef
   onError?: EventListenerOrEventListenerObject;
-  // eslint-disable-next-line no-undef
   onAbort?: EventListenerOrEventListenerObject;
   [key: string]: unknown;
   [event: `on${string}`]: EventListenerOrEventListenerObject | undefined;
@@ -82,4 +79,52 @@ function attachEvents(
   };
 
   events.forEach((name) => el.addEventListener(name, createEventHandler(name), eventOptions));
+}
+
+if (import.meta.vitest) {
+  const { it, expect, vi, afterEach } = import.meta.vitest;
+
+  afterEach(() => {
+    document.head.innerHTML = '';
+    vi.restoreAllMocks();
+  });
+
+  it('creates a script and resolves on load', async () => {
+    vi.spyOn(document.head, 'appendChild').mockImplementation((node) => node);
+
+    const promise = createScript('https://example.com/app.js', true, {
+      async: true,
+      type: 'module',
+    });
+
+    const appended = (document.head.appendChild as ReturnType<typeof vi.fn>).mock
+      .calls[0][0] as HTMLScriptElement;
+    expect(appended.getAttribute('data-status')).toBe('pending');
+    expect(appended.getAttribute('async')).toBe('');
+    expect(appended.type).toBe('module');
+
+    appended.dispatchEvent(new Event('load'));
+    await expect(promise).resolves.toBe(appended);
+    expect(appended.getAttribute('data-status')).toBe('load');
+  });
+
+  it('rejects when script fails to load', async () => {
+    vi.spyOn(document.head, 'appendChild').mockImplementation((node) => node);
+
+    const promise = createScript('https://example.com/fail.js', true);
+    const appended = (document.head.appendChild as ReturnType<typeof vi.fn>).mock
+      .calls[0][0] as HTMLScriptElement;
+
+    appended.dispatchEvent(new Event('error'));
+    await expect(promise).rejects.toBeTruthy();
+  });
+
+  it('reuses an already loaded script', async () => {
+    const existing = document.createElement('script');
+    existing.setAttribute('src', 'https://example.com/cached.js');
+    existing.setAttribute('data-status', 'load');
+    vi.spyOn(document, 'querySelector').mockReturnValue(existing);
+
+    await expect(createScript('https://example.com/cached.js')).resolves.toBe(existing);
+  });
 }

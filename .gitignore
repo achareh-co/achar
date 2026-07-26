@@ -4,5 +4,7 @@ node_modules
 .DS_Store
 coverage
 dist
+playground/dist
 types
 .conf*
+.yarn/install-state.gz

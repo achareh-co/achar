@@ -10,3 +10,26 @@ export default function writeClipboardApi(text: string): Promise<void> {
     return Promise.reject(new Error('No support for write clipboard API'));
   }
 }
+
+if (import.meta.vitest) {
+  const { it, expect, vi, afterEach } = import.meta.vitest;
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  it('writes text using clipboard API', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal('navigator', { clipboard: { writeText } });
+
+    await expect(writeClipboardApi('hello')).resolves.toBeUndefined();
+    expect(writeText).toHaveBeenCalledWith('hello');
+  });
+
+  it('rejects when clipboard API is unavailable', async () => {
+    vi.stubGlobal('navigator', {});
+
+    await expect(writeClipboardApi('hello')).rejects.toThrow('No support for write clipboard API');
+  });
+}
