@@ -1,5 +1,12 @@
 # Achar
 
+[![npm version](https://img.shields.io/npm/v/@achareh/achar.svg)](https://www.npmjs.com/package/@achareh/achar)
+[![npm downloads](https://img.shields.io/npm/dm/@achareh/achar.svg)](https://www.npmjs.com/package/@achareh/achar)
+[![CI](https://github.com/achareh-co/achar/actions/workflows/ci.yml/badge.svg)](https://github.com/achareh-co/achar/actions/workflows/ci.yml)
+[![node](https://img.shields.io/node/v/@achareh/achar.svg)](https://nodejs.org)
+[![license](https://img.shields.io/npm/l/@achareh/achar.svg)](./LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-ready-blue.svg)](https://www.typescriptlang.org/)
+
 Shared TypeScript utilities for Achareh frontends: Persian text helpers, DOM scroll tools, debounce/throttle, EventBus, and clipboard APIs.
 
 [فارسی](./README.fa.md) · [Full API reference](./docs/en/index.md)
