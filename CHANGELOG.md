@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/achareh-co/achar/compare/v1.0.9...v2.0.0) (2026-07-26)
+
+
+### Features
+
+* **chore/update-deps-to-leatest:** add shared helpers and attrSupport ([446b61a](https://github.com/achareh-co/achar/commit/446b61a8410e1e16b7072bffe70746bca4492a42))
+
 ### [1.0.9](https://github.com/achareh-co/achar/compare/v1.0.8...v1.0.9) (2024-04-29)
 
 
