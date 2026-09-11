@@ -72,7 +72,7 @@
     "typescript-eslint": "8.65.0",
     "unbuild": "3.6.1",
     "vite": "8.1.5",
-    "vitest": "4.1.10"
+    "vitest": "4.1.11"
   },
   "directories": {
     "test": "tests"
