@@ -56,7 +56,7 @@
     "*.test.mjs": "eslint --fix"
   },
   "devDependencies": {
-    "@babel/types": "8.0.4",
+    "@babel/types": "8.0.6",
     "@eslint/js": "10.0.1",
     "@types/node": "22.20.1",
     "@vitest/coverage-v8": "4.1.10",
