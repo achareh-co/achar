@@ -71,7 +71,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.65.0",
     "unbuild": "3.6.1",
-    "vite": "8.1.5",
+    "vite": "8.1.6",
     "vitest": "4.1.10"
   },
   "directories": {
