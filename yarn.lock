@@ -11,7 +11,7 @@ __metadata:
   dependencies:
     "@babel/types": "npm:8.0.4"
     "@eslint/js": "npm:10.0.1"
-    "@types/node": "npm:22.20.1"
+    "@types/node": "npm:22.20.7"
     "@vitest/coverage-v8": "npm:4.1.10"
     eslint: "npm:10.8.0"
     eslint-config-prettier: "npm:10.1.8"
@@ -982,12 +982,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.20.1":
-  version: 22.20.1
-  resolution: "@types/node@npm:22.20.1"
+"@types/node@npm:22.20.7":
+  version: 22.20.7
+  resolution: "@types/node@npm:22.20.7"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/f2ba54d3d1fb92e1c57c78d32c3a17655b1e87363b707136f55c422b4838d4054901ce5d27f75bb0e5ecb7ebfee3804e0987822d22b473473008091857a09353
+  checksum: 10c0/f8c37287f51bab167d2698cad9ddc0817d42f18daad60a5145b54d83bda14a6916b0cb6528df31b151546140d8982026f587be1efe73f54c7eec2bc92986c05b
   languageName: node
   linkType: hard
 
